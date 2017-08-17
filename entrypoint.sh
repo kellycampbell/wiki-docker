@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
 
-exec mongodb
-exec node wiki configure
+source ~/.nvm/nvm.sh
+
+exec node server
