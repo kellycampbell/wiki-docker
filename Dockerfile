@@ -4,8 +4,9 @@ FROM debian:latest
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
  
 # Install prerequisites
-RUN apt-get update
-RUN apt-get install curl build-essential libssl-dev -y
+RUN apt-get update \
+ && apt-get install curl build-essential libssl-dev git -y
+
 
 # Install Node.js
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
@@ -15,12 +16,17 @@ RUN source ~/.nvm/nvm.sh; \
     npm install -g node-gyp
 
 # Install Wiki.js
-RUN mkdir -p /var/www/wiki
+
 WORKDIR /var/www/wiki
+
 RUN source ~/.nvm/nvm.sh; \
-    npm install wiki.js@1.0.4
+    npm install https://github.com/Requarks/wiki.git#v1.0.6
 
+# Run configure
+#RUN node wiki configure
 
-COPY entrypoint.sh /var/www/wiki/entrypoint.sh
-ENTRYPOINT ["/var/www/wiki/entrypoint.sh"]
+COPY entrypoint.sh entrypoint.sh
+COPY config.yml config.yml
+
+CMD ["/var/www/wiki/entrypoint.sh"]
 EXPOSE 3000

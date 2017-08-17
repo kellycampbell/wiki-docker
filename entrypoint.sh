@@ -3,4 +3,5 @@ set -e
 
 source ~/.nvm/nvm.sh
 
-exec node server
+exec node node_modules/wiki/server
+ 
