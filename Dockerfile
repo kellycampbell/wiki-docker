@@ -5,7 +5,7 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
  
 # Install prerequisites
 RUN apt-get update \
- && apt-get install curl build-essential libssl-dev git -y
+ && apt-get install curl build-essential libssl-dev git python -y
 
 
 # Install Node.js
@@ -17,10 +17,15 @@ RUN source ~/.nvm/nvm.sh; \
 
 # Install Wiki.js
 
-WORKDIR /var/www/wiki
+WORKDIR /var/www
 
 RUN source ~/.nvm/nvm.sh; \
-    npm install https://github.com/Requarks/wiki.git#v1.0.6
+    git clone https://github.com/Requarks/wiki.git ; \
+    cd wiki ; \
+    git checkout v1.0.12 ; \
+    npm install
+
+WORKDIR /var/www/wiki
 
 # Run configure
 #RUN node wiki configure
