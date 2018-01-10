@@ -23,7 +23,8 @@ RUN source ~/.nvm/nvm.sh; \
     git clone https://github.com/Requarks/wiki.git ; \
     cd wiki ; \
     git checkout v1.0.12 ; \
-    npm install
+    npm install ; \
+    npm run build
 
 WORKDIR /var/www/wiki
 
