@@ -9,11 +9,13 @@ RUN apt-get update \
 
 
 # Install Node.js
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
 RUN source ~/.nvm/nvm.sh; \
-    nvm install node && \
-    nvm use node && \
-    npm install -g node-gyp
+    nvm install --lts node && \
+    nvm use --lts node && \
+    npm install -g node-gyp && \
+    npm install -g yarn 
+
 
 # Install Wiki.js
 
@@ -21,10 +23,11 @@ WORKDIR /var/www
 
 RUN source ~/.nvm/nvm.sh; \
     git clone https://github.com/Requarks/wiki.git ; \
+    export NODE_ENV=DEVEL ; \
     cd wiki ; \
-    git checkout v1.0.12 ; \
-    npm install ; \
-    npm run build
+    git checkout v1.0.68 ; \
+    yarn install ; \
+    yarn run build
 
 WORKDIR /var/www/wiki
 
